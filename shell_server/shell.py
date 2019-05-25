@@ -10,7 +10,6 @@ def run_shell(command,timeout=None,stdin=None,stdout=subprocess.PIPE,stderr=subp
     if shell:
         if type(command) == list:
             raise Exception("please put the command as string")
-        command:str
         if command.endswith(";"):
             command+="pwd"
         else:
@@ -35,12 +34,11 @@ def run_shell(command,timeout=None,stdin=None,stdout=subprocess.PIPE,stderr=subp
             print(proc.pid)
             stdout, stderr = proc.communicate()
             if shell:
-                stdout:bytes
                 pwd = stdout.decode().split("\n")[-2]
                 stdout = "\n".join(stdout.decode().split("\n")[:-2]).encode()
                 print(pwd)
                 os.chdir(pwd)
-            # tuple 형태로 stdout:bytes stderr:bytes return
+            # tuple result stdout:bytes stderr:bytes return
             return stdout,stderr
         finally:
             timer.cancel()
